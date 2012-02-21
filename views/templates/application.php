@@ -12,8 +12,8 @@
        More info: h5bp.com/i/378 -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title></title>
-  <meta name="description" content="">
+  <title><?php $this->yield("title", "cHPHPBigForms") ?></title>
+  <meta name="description" content="<?php $this->yield("description", "checkedHat PHP Big Forms") ?>">
   <meta name="author" content="Stefan 'ramsesoriginal' Insam">
 
   <!-- Mobile viewport optimized: h5bp.com/viewport -->
@@ -37,15 +37,15 @@
   <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
   <header>
     <hgroup>
-      <h1></h1>
-      <h2></h2>
+      <h1><?php $this->yield("title", "cHPHPBigForms") ?></h1>
+      <h2><?php $this->yield("description", "checkedHat PHP Big Forms") ?></h2>
     </hgroup>
   </header>
   <div role="main" id="container">
-
+    <?php $this->yield() ?>
   </div>
   <footer>
-
+    <?php $this->yield("footer") ?>
   </footer>
 
 
