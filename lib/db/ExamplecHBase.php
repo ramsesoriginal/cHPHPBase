@@ -1,8 +1,9 @@
 <?php
-class cHBase implements IcHModel{
+/*class cHBase  implements IcHModel*/// static::Doesn't work until php 5.3
+abstract class cHBase{
 	
-    private static $flash_Messages;
-    private static $error_Messages;
+    private static $flash_Messages = array();
+    private static $error_Messages = array();
 
 	public $id;
 
@@ -22,40 +23,44 @@ class cHBase implements IcHModel{
     public function validationErrors(){
      return;   
     }
-    public static function create($new_object){
-        $this->flash("successfully created"); 
-        // static::Doesn't work until php 5.3
-        $classname=self::className();
-        return new $classname;
-    }
-    public static function find($query=null) {
-        $classname=self::className();
-        $$query="";
-        // static::Doesn't work until php 5.3
-        return array(new $classname, new $classname, new $classname);
-    }
-    public static function find_by_id($id) {
-        $classname=self::className();
+   
+    // static::Doesn't work until php 5.3
+    abstract public static function create($new_object=null);/*{
+        self::flash("successfully created"); 
+        return new static::__CLASS__;
+    }*/
+
+    // static::Doesn't work until php 5.3
+    abstract public static function find();/* {
+        for ($i = 0;$i < func_num_args();$i++) {
+          $field = func_get_arg($i);
+          $value = func_get_arg($i+1);
+          $i++;
+        }
+        return array(new static::create(), new static::create(), new static::create());
+    }*/
+
+    // static::Doesn't work until php 5.3
+    abstract public static function find_by_id($id);/* {
         $$id="";
-        // static::Doesn't work until php 5.3
-        return new $classname;
-    }
+        return new static::create();
+    }*/
 
     public static function flash($message="") {
-        return "staticflash_Messages".$message;
+        if (!empty($message))
+            self::$flash_Messages[] = $message;
+        return self::$flash_Messages;
     }
 
     public static function error($message="") {
-        return "staticerror_Messages".$message;
-    }
-
-    public static function className() {
-        return get_called_class();
+        if (!empty($message))
+            self::$error_Messages[] = $message;
+        return self::$error_Messages;
     }
 
     public static function __callStatic($name, $arguments)
     {
-        echo "Calling undefined method";
+        echo "Calling ".$name." method";
     }
 }
 ?>

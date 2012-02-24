@@ -23,7 +23,7 @@ if (!isset($no_template))
 if (!isset($extension))
   $extension = "html";
 if (!isset($object))
-  $object = "a simple Object";
+  $object = null;
 if (!isset($params))
   $params = array();
 if (!isset($preParams))
@@ -108,29 +108,4 @@ switch ($method) {
   case 'GET':
     if (empty($id) && empty($action) ) 
       $action="Index";
-    elseif (!empty($id) && empty($action))
-      if (empty($action) )
-        $action="Show";
-    break;
-  case 'HEAD':
-      $action="Index";
-    break;
-  case 'DELETE':
-      $action="Destroy";
-    break;
-  default:
-    if (!empty($action))
-      $action="index";
-    break;
-}
-if (!empty($id))
-  if (!empty($object))
-    $app->{$action}($id,$object);
-  else
-    $app->{$action}($id);
-else
-  if (!empty($object))
-    $app->{$action}($object);
-  else
-    $app->{$action}();
-?>
+    elseif (!empty($i

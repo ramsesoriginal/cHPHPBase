@@ -2,6 +2,22 @@
 
 class ApplicationController extends lib {
 
+	public function __call($methodName, $args) {
+        if (preg_match('~^(pre)([A-Z])(.*)$~', $methodName, $matches)) {
+            $method = strtolower($matches[2]) . $matches[3];
+            if (!method_exists($this, $method)) {
+                throw new MemberAccessException('Method ' . $method . ' not exists');
+            }
+            $run=true;
+            if (method_exists($this, $method))
+        		$run = $this->$method;
+        	if ($run)
+            	return call_user_func_array(array($this,$methodName),$args);
+            return;
+        }
+        throw new MemberAccessException('Method ' . $method . ' not exists');
+    }
+
 	public function Index() {
 		//$list = $this->model()::find(); Doesn't work until php 5.3
 		$list = call_user_func(array($this->model(), 'find'));
@@ -15,9 +31,9 @@ class ApplicationController extends lib {
         $this->render($this->model().'/show', compact($this->model()));
 	}
 
-	public function Edit($id, $object=false) {
+	public function Edit($id, $object=null) {
 		$model=$this->model();
-		if (!$object) {
+		if (empty($object)) {
 			//${$this->model()}={$this->model()}::find_by_id($id); Doesn't work until php 5.3
 			$$model = call_user_func(array($this->model(), 'find_by_id'),array($id));
 		} else {
