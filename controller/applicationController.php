@@ -9,10 +9,10 @@ class ApplicationController extends lib {
                 throw new MemberAccessException('Method ' . $method . ' not exists');
             }
             $run=true;
-            if (method_exists($this, $method))
-        		$run = $this->$method;
+            if (method_exists($this, $methodName))
+        		$run = $this->$methodName;
         	if ($run)
-            	return call_user_func_array(array($this,$methodName),$args);
+            	return call_user_func_array(array($this,$method),$args);
             return;
         }
         throw new MemberAccessException('Method ' . $method . ' not exists');
